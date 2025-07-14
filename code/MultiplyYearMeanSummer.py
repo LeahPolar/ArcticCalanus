@@ -119,4 +119,4 @@ gl1.ylocator = mticker.FixedLocator(range(60, 91, 10))
 cbar2 = plt.colorbar(img2, ax=axes[1], orientation='horizontal', pad=0.05, fraction=0.05)
 cbar2.set_label('C. glacialis c1-c2 habitat Suitability Change')
 
-plt.savefig('/home/yytan/Figures/Cgla-supp/result_summer.jpg', dpi=500) 
+plt.savefig('/home/yytan/Figures/Cgla-supp/result_summer_2.jpg', dpi=500) 

@@ -103,7 +103,7 @@ with rasterio.open(os.path.join(output_path, "CglaSuitability1993-2022mean.tif")
     dst.write(mean_all.astype(np.float32), 1)
 # ... existing code ...
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 6), subplot_kw={'projection': ccrs.NorthPolarStereo()})
+fig, axes = plt.subplots(1, 2, figsize=(12, 6), subplot_kw={'projection': ccrs.NorthPolarStereo(central_longitude=30)})
 
 # 画圆形边界Path
 theta = np.linspace(0, 2*np.pi, 100)
@@ -138,5 +138,5 @@ gl1.ylocator = mticker.FixedLocator(range(60, 91, 10))
 cbar2 = plt.colorbar(img2, ax=axes[1], orientation='horizontal', pad=0.05, fraction=0.05)
 cbar2.set_label('C. glacialis c1-c2 habitat Suitability Change')
 
-plt.savefig('/home/yytan/Figures/Cgla-supp/result.jpg', dpi=500)  # 保存图片
+plt.savefig('/home/yytan/Figures/Cgla-supp/result_2.jpg', dpi=500)  # 保存图片
 
