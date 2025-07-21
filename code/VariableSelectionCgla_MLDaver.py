@@ -41,8 +41,7 @@ def calculate_tss(y_true, y_pred):
     return tss
 
 
-df = pd.read_csv("/home/yytan/Downloads/Merged_Final_Cgla1.csv")
-# df = pd.read_csv("D:/0-Calanus/0-SurveyData/Cgla_c1c2c3.csv")
+df = pd.read_csv("/home/yytan/Downloads/Cgla_c1c2_mldaver.csv")
 
 # df = df[(df['month'] >= 4) & (df['month'] <= 9)]
 
@@ -58,7 +57,7 @@ df["Cgla_occur"] = df["Cgla_c1c2"].apply(lambda x:1 if x!=0 else 0)
 df["cycle_year"] = df['year']
 cycle_years = sorted(df['cycle_year'].unique())
 
-feature_names = ['SIC', 'CHL', 'SST', 'Sal', 'nitrat', 'mlotst_glor']
+feature_names = ['SIC', 'CHL', 'SST', 'Sal', 'nitrat', 'mlotst_glor', 'MLDaverCHL', 'MLDaverSal', 'MLDaverSST']
 
 def calbestComb(num, df):
     results = []
@@ -145,7 +144,7 @@ def plotGCV(feature_names, sector):
     plt.legend(loc='lower right')
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"/home/yytan/ModelTest/ROCAUC{sector}_{num}.jpg",dpi=300)
+    plt.savefig(f"/home/yytan/ModelTest/ROCAUC{sector}_{num}_MLDaver.jpg",dpi=300)
     
     mean_feature_contributions = np.mean(feature_contributions, axis=0)
     feature_contribution_df = pd.DataFrame({
@@ -165,7 +164,7 @@ def plotGCV(feature_names, sector):
     plt.title('Average Feature Contribution')
     plt.grid(axis='x', linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.savefig(f"/home/yytan/ModelTest/Contribution{sector}_{num}.jpg",dpi=300) 
+    plt.savefig(f"/home/yytan/ModelTest/Contribution{sector}_{num}_MLDaver.jpg",dpi=300) 
     
     # GCV plot
     fig, ax1 = plt.subplots(figsize=(12, 6))
@@ -184,14 +183,11 @@ def plotGCV(feature_names, sector):
     all_labels = labels1 + labels2
     ax1.legend(all_lines, all_labels, loc='center right')
     plt.title('Genuine Cross Validation')
-    plt.savefig(f"/home/yytan/ModelTest/GCV{sector}_{num}jpg", dpi=300)
+    plt.savefig(f"/home/yytan/ModelTest/GCV{sector}_{num}_MLDaver.jpg", dpi=300)
     return mean_auc, mean_tss
 
 
-for i in range(6, 5, -1):
+for i in range(9, 5, -1):
     outcome = calbestComb(i, df)
-    outcome[0].to_csv(f"/home/yytan/Maxent/TestBestVar/CglaResultBEST{i}_nouv.csv", index=False)
-    auc, tss = plotGCV(list(outcome[1][0]), "Cgla_noNutri_nouv")
-    
-    
-
+    outcome[0].to_csv(f"/home/yytan/Maxent/TestBestVar/CglaResultBEST{i}_MLDaver.csv", index=False)
+    auc, tss = plotGCV(list(outcome[1][0]), "Cgla_MLDaver") 
